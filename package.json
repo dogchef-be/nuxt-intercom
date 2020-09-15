@@ -1,0 +1,32 @@
+{
+  "name": "nuxt-intercom",
+  "version": "1.0.0",
+  "description": "Nuxtjs module for Intercom",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/module.js",
+  "types": "dist/module.d.ts",
+  "scripts": {
+    "clean": "npm prune && rm -rf dist",
+    "transpile": "tsc",
+    "build": "npm run clean && npm run transpile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dogchef-be/nuxt-intercom.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dogchef-be/nuxt-intercom/issues"
+  },
+  "homepage": "https://github.com/dogchef-be/nuxt-intercom#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@nuxt/types": "^2.14.5",
+    "@nuxt/typescript-build": "^2.0.3",
+    "nuxt": "^2.14.5",
+    "typescript": "^4.0.2"
+  }
+}
