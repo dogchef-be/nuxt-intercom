@@ -1,8 +1,31 @@
-export default class Intercom {
-  intercomSettings;
+import { IntercomSettings } from "./type";
 
-  constructor(intercomSettings = {}) {
+export default class Intercom {
+  intercomSettings: IntercomSettings = {
+    appId: "xgycncuq",
+    unreadCount: 0,
+    userData: {},
+    visible: false,
+    autoBoot: false,
+  };
+
+  constructor(intercomSettings) {
     this.intercomSettings = intercomSettings;
+  }
+
+  /**
+   * Initializes the Intercom instance by setting up event the listeners required to maintain the internal state with Intercom state.
+   */
+  init() {
+    this.onHide(() => {
+      this.intercomSettings.visible = false;
+    });
+    this.onShow(() => {
+      this.intercomSettings.visible = true;
+    });
+    this.onUnreadCountChange((unreadCount) => {
+      this.intercomSettings.unreadCount = unreadCount;
+    });
   }
 
   /**
@@ -45,7 +68,7 @@ export default class Intercom {
    *
    * @param {*} intercomSettings
    */
-  update(intercomSettings) {
+  update(intercomSettings = this.intercomSettings) {
     this.execute(
       "update",
       intercomSettings === null ? this.intercomSettings : intercomSettings
