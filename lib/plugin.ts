@@ -1,92 +1,75 @@
 import { Plugin } from "@nuxt/types";
-import Intercom from "./Intercom";
-import { IntercomSettings } from "./type";
 
-let intercom: Intercom | null;
-let settings: IntercomSettings;
-let installed = false;
+const INTERCOM_URL = "https://widget.intercom.io/widget/";
 
-const intercomPlugin: Plugin = (ctx, inject): void => {
-  intercom = intercom === null ? new Intercom(settings) : intercom;
-  inject("intercom", intercom);
-
-  ctx.app.mixins.push(intercomMixin);
+const INTERCOM_SETTINGS: Intercom_.IntercomSettings = {
+  app_id: "<%= options.appId %>",
+  hide_default_launcher:
+    ("<%= options.hideDefaultLauncher %>" as string) === "true",
 };
 
-const intercomMixin = {
-  mounted() {
-    if (installed) return;
+const injectScript = (appId: string): HTMLScriptElement => {
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = `${INTERCOM_URL}${appId}`;
 
-    if (typeof window.Intercom === "function") {
-      this.intercom.init();
-      this.intercom.execute("reattach_activator");
-      this.intercom.update();
-    } else {
-      window.Intercom = createIntercomPlaceholder();
+  const headOrBody = document.head || document.body;
+  headOrBody.appendChild(script);
 
-      callWhenPageLoaded(() =>
-        includeIntercomScript(
-          settings.appId,
-          initialiseIntercom(settings.appId)
-        )
-      );
+  return script;
+};
+
+const loadScript = (
+  settings: Intercom_.IntercomSettings
+): Promise<typeof Intercom> => {
+  return new Promise<typeof Intercom>((resolve, reject) => {
+    if (typeof window.intercomSettings === "undefined") {
+      window.intercomSettings = settings;
     }
 
-    installed = true;
-  },
+    try {
+      const i: any = function(...args: unknown[]): void {
+        i.c(args);
+      };
+      i.q = [];
+      i.c = function(args: unknown): void {
+        i.q.push(args);
+      };
+
+      window.Intercom = i;
+
+      let script = injectScript(settings.app_id as string);
+
+      script.addEventListener("load", () => {
+        window.Intercom("boot", settings);
+        resolve(window.Intercom);
+      });
+
+      script.addEventListener("error", () => {
+        reject(new Error("Failed to load Intercom"));
+      });
+    } catch (error) {
+      reject(error);
+      return;
+    }
+  });
 };
 
-/**
- * Overrides the function that pushes the actions performed to be in a queue.
- */
-function createIntercomPlaceholder() {
-  const placeholder = (...args) => placeholder.c(args);
-  placeholder.queue = [];
-  placeholder.c = (args) => placeholder.queue.push(args);
+export async function getIntercomInstance(
+  command?: Intercom_.IntercomCommand,
+  ...args: any
+): Promise<typeof Intercom | void> {
+  let instance = window.Intercom;
 
-  return placeholder;
-}
-
-/**
- * Sets a callback when the browser loads.
- * Supports IE8 and IE9+
- *
- * @param callback
- */
-function callWhenPageLoaded(callback) {
-  if (window.attachEvent) {
-    window.attachEvent("onload", callback);
-  } else {
-    window.addEventListener("load", callback, false);
+  if (!instance) {
+    instance = await loadScript(INTERCOM_SETTINGS);
   }
+
+  return command ? instance(command, args) : instance;
 }
 
-/**
- * Initialise Intercom and auto booting if set to do so.
- *
- * @param appId
- */
-function initialiseIntercom(appId) {
-  this.intercom.init();
-
-  if (settings.autoBoot) {
-    this.intercom.boot({ app_id: appId });
-  }
-}
-
-/**
- * Include Intercom script in the main js file.
- *
- * @param appId
- * @param callback
- */
-function includeIntercomScript(appId, callback) {
-  const intercomScript = document.createElement("script");
-  intercomScript.async = true;
-  intercomScript.src = `https://widget.intercom.io/widget/${appId}`;
-  const firstScript = document.getElementsByTagName("script")[0];
-  firstScript.parentNode.insertBefore(intercomScript, firstScript);
-  intercomScript.addEventListener("load", callback);
-}
+const intercomPlugin: Plugin = (ctx, inject): void => {
+  inject("intercom", getIntercomInstance);
+};
 
 export default intercomPlugin;

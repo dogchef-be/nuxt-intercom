@@ -14,7 +14,7 @@
       "~/*": ["./*"]
     },
     "outDir": "dist",
-    "types": ["@nuxt/types"]
+    "types": ["@nuxt/types", "@types/intercom-web"]
   },
   "exclude": ["node_modules"],
   "include": ["lib"]
