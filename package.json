@@ -1,6 +1,6 @@
 {
   "name": "nuxt-intercom",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NuxtJS module for Intercom",
   "repository": "github:dogchef-be/nuxt-intercom",
   "license": "MIT",
