@@ -6,6 +6,9 @@ const INTERCOM_SETTINGS: Intercom_.IntercomSettings = {
   app_id: "<%= options.appId %>",
   hide_default_launcher:
     ("<%= options.hideDefaultLauncher %>" as string) === "true",
+  alignment: "<%= options.alignment %>",
+  horizontal_padding: Number.parseInt("<%= options.horizontalPadding %>"),
+  vertical_padding: Number.parseInt("<%= options.verticalPadding %>"),
 };
 
 const injectScript = (appId: string): HTMLScriptElement => {

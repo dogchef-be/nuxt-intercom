@@ -8,7 +8,14 @@ declare module "vue/types/vue" {
 }
 
 export default function IntercomModule(this: any): void {
-  const options = this.options.intercom;
+  const defaults = {
+    hideDefaultLauncher: false,
+    alignment: "right",
+    horizontalPadding: 20,
+    verticalPadding: 20,
+  };
+
+  const options = Object.assign({}, defaults, this.options.intercom);
   if (typeof options.appId !== "string" || !options.appId.length) {
     throw new Error("nuxt-intercom: appId is required");
   }
