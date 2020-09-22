@@ -1,30 +1,39 @@
 import { Plugin } from "@nuxt/types";
 
-const INTERCOM_URL = "https://widget.intercom.io/widget/";
+interface IntercomSettings extends Intercom_.IntercomSettings {
+  enable_mobile_padding: boolean;
+}
 
-const INTERCOM_SETTINGS: Intercom_.IntercomSettings = {
+const INTERCOM_URL = "https://widget.intercom.io/widget/";
+const INTERCOM_SETTINGS: IntercomSettings = {
   app_id: "<%= options.appId %>",
   hide_default_launcher:
     ("<%= options.hideDefaultLauncher %>" as string) === "true",
   alignment: "<%= options.alignment %>",
   horizontal_padding: Number.parseInt("<%= options.horizontalPadding %>"),
   vertical_padding: Number.parseInt("<%= options.verticalPadding %>"),
+  enable_mobile_padding:
+    ("<%= options.enableMobilePadding %>" as string) === "true",
 };
 
-const injectScript = (appId: string): HTMLScriptElement => {
+const injectScript = (settings: IntercomSettings): HTMLScriptElement => {
+  const headOrBody = document.head || document.body;
+
+  if (settings.enable_mobile_padding) {
+    const style = document.createElement("style");
+    style.innerHTML = `#intercom-container .intercom-borderless-frame{bottom:${settings.vertical_padding}px!important}`;
+    headOrBody.appendChild(style);
+  }
+
   const script = document.createElement("script");
   script.async = true;
-  script.src = `${INTERCOM_URL}${appId}`;
-
-  const headOrBody = document.head || document.body;
+  script.src = `${INTERCOM_URL}${settings.app_id}`;
   headOrBody.appendChild(script);
 
   return script;
 };
 
-const loadScript = (
-  settings: Intercom_.IntercomSettings
-): Promise<typeof Intercom> => {
+const loadScript = (settings: IntercomSettings): Promise<typeof Intercom> => {
   return new Promise<typeof Intercom>((resolve, reject) => {
     if (typeof window.intercomSettings === "undefined") {
       window.intercomSettings = settings;
@@ -41,7 +50,7 @@ const loadScript = (
 
       window.Intercom = i;
 
-      let script = injectScript(settings.app_id as string);
+      let script = injectScript(settings);
 
       script.addEventListener("load", () => {
         window.Intercom("boot", settings);

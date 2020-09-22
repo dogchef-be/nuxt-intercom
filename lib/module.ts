@@ -13,6 +13,7 @@ export default function IntercomModule(this: any): void {
     alignment: "right",
     horizontalPadding: 20,
     verticalPadding: 20,
+    enableMobilePadding: false,
   };
 
   const options = Object.assign({}, defaults, this.options.intercom);

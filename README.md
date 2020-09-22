@@ -76,6 +76,12 @@ Move the default launcher icon horizontally. Padding from right side of screen M
 
 Move the default launcher icon vertically. Padding from bottom of screen. Minimum value: 20.
 
+### `enableMobilePadding`
+
+- Type: `Boolean`
+- Default: `false`
+
+Apply the `verticalPadding` property to mobile devices.
 
 ## Usage
 
