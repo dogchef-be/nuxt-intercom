@@ -55,6 +55,28 @@ The app_id of your Intercom app which will indicate where to store any data.
 
 Hide the default launcher icon. Setting to false will forcefully show the launcher icon.
 
+### `alignment`
+
+- Type: `String`
+- Default: `right`
+
+Dictate the alignment of the default launcher icon to be on the left/right. Possible values: "left" or "right" (any other value is treated as right).
+
+### `horizontalPadding`
+
+- Type: `Number`
+- Default: `20`
+
+Move the default launcher icon horizontally. Padding from right side of screen Minimum value: 20.
+
+### `verticalPadding`
+
+- Type: `Number`
+- Default: `20`
+
+Move the default launcher icon vertically. Padding from bottom of screen. Minimum value: 20.
+
+
 ## Usage
 
 It can be used inside components like:
