@@ -21,7 +21,7 @@ const injectScript = (settings: IntercomSettings): HTMLScriptElement => {
 
   if (settings.enable_mobile_padding) {
     const style = document.createElement("style");
-    style.innerHTML = `#intercom-container .intercom-borderless-frame{bottom:${settings.vertical_padding}px!important}`;
+    style.innerHTML = `#intercom-container iframe[name=intercom-chat-frame]{bottom:${settings.vertical_padding}px!important}`;
     headOrBody.appendChild(style);
   }
 
