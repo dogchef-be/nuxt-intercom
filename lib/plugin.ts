@@ -1,19 +1,23 @@
 import { Plugin } from "@nuxt/types";
 
 interface IntercomSettings extends Intercom_.IntercomSettings {
+  disabled: boolean;
   enable_mobile_padding: boolean;
+}
+
+function _isTrue(val: string): boolean {
+  return val === "true";
 }
 
 const INTERCOM_URL = "https://widget.intercom.io/widget/";
 const INTERCOM_SETTINGS: IntercomSettings = {
+  disabled: _isTrue("<%= options.disabled %>"),
   app_id: "<%= options.appId %>",
-  hide_default_launcher:
-    ("<%= options.hideDefaultLauncher %>" as string) === "true",
+  hide_default_launcher: _isTrue("<%= options.hideDefaultLauncher %>"),
   alignment: "<%= options.alignment %>",
   horizontal_padding: Number.parseInt("<%= options.horizontalPadding %>"),
   vertical_padding: Number.parseInt("<%= options.verticalPadding %>"),
-  enable_mobile_padding:
-    ("<%= options.enableMobilePadding %>" as string) === "true",
+  enable_mobile_padding: _isTrue("<%= options.enableMobilePadding %>"),
 };
 
 const injectScript = (settings: IntercomSettings): HTMLScriptElement => {
@@ -49,6 +53,7 @@ const loadScript = (settings: IntercomSettings): Promise<typeof Intercom> => {
       };
 
       window.Intercom = i;
+      if (settings.disabled) return window.Intercom;
 
       let script = injectScript(settings);
 

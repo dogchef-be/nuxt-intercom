@@ -9,6 +9,7 @@ declare module "vue/types/vue" {
 
 export default function IntercomModule(this: any): void {
   const defaults = {
+    disabled: false,
     hideDefaultLauncher: false,
     alignment: "right",
     horizontalPadding: 20,

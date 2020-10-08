@@ -25,7 +25,7 @@ export default {
   // ...other config options
   modules: ["nuxt-intercom"];
   intercom: {
-    appId: 'dad234asd',
+    appId: 'my_app_id',
   }
 }
 ```
@@ -41,6 +41,13 @@ export default {
 ```
 
 ## Options
+
+### `disabled`
+
+- Type: `Boolean`
+- Default: `false`
+
+Disable Intercom. Useful for non-production environments.
 
 ### `appId`
 
