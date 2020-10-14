@@ -30,6 +30,7 @@ const injectScript = (settings: IntercomSettings): HTMLScriptElement => {
   }
 
   const script = document.createElement("script");
+  script.type = "text/javascript";
   script.async = true;
   script.src = `${INTERCOM_URL}${settings.app_id}`;
   headOrBody.appendChild(script);
@@ -60,11 +61,7 @@ const loadScript = (settings: IntercomSettings): Promise<typeof Intercom> => {
       script.addEventListener("load", () => {
         window.Intercom("boot", settings);
         resolve(window.Intercom);
-      });
-
-      script.addEventListener("error", () => {
-        reject(new Error("Failed to load Intercom"));
-      });
+      }, false);
     } catch (error) {
       reject(error);
       return;
@@ -74,7 +71,7 @@ const loadScript = (settings: IntercomSettings): Promise<typeof Intercom> => {
 
 export async function getIntercomInstance(
   command?: Intercom_.IntercomCommand,
-  ...args: any
+  args?: any
 ): Promise<typeof Intercom | void> {
   let instance = window.Intercom;
 
