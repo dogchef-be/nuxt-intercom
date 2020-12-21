@@ -6,7 +6,7 @@ NuxtJS module for Intercom
 
 ## Main features
 
-- Load Intercom only when required
+- Load Intercom only when required (once `$intercom` is called)
 - Reuse the same instance across all components
 - TypeScript support
 
