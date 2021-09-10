@@ -1,8 +1,20 @@
-# nuxt-intercom
+<h1 align="center">
+  nuxt-intercom
+</h1>
+<p align="center">
+  NuxtJS module for Intercom
+</p>
 
-<a href="https://www.npmjs.com/package/nuxt-intercom"><img src="https://img.shields.io/npm/v/nuxt-intercom?style=flat-square"></a> <a href="https://www.npmjs.com/package/nuxt-intercom"><img src="https://img.shields.io/npm/dt/nuxt-intercom?style=flat-square"></a> <a href="#"><img src="https://img.shields.io/github/license/dogchef-be/nuxt-intercom?style=flat-square"></a>
+<p align="center">
+  <a href="https://www.npmjs.com/package/nuxt-intercom"><img src="https://img.shields.io/npm/v/nuxt-intercom?style=flat-square"></a> <a href="https://www.npmjs.com/package/nuxt-intercom"><img src="https://img.shields.io/npm/dt/nuxt-intercom?style=flat-square"></a> <a href="#"><img src="https://img.shields.io/github/license/dogchef-be/nuxt-intercom?style=flat-square"></a>
+</p>
 
-NuxtJS module for Intercom
+## Table of contents
+- [Main features](#main-features)
+- [Setup](#setup)
+- [Options](#options)
+- [Usage](#usage)
+- [License](#license)
 
 ## Main features
 
