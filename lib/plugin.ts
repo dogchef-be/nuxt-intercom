@@ -80,7 +80,7 @@ export async function getIntercomInstance(
   command?: Intercom_.IntercomCommand,
   args?: any
 ): Promise<typeof Intercom | void> {
-  let instance = window.Intercom;
+  let instance = window.Intercom as any;
 
   if (!instance) {
     instance = await loadScript(INTERCOM_SETTINGS);
