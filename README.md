@@ -67,6 +67,13 @@ Disable Intercom. Useful for non-production environments.
 
 The app_id of your Intercom app which will indicate where to store any data.
 
+### `i18n`
+
+- Type: `Boolean`
+- Default: `false`
+
+Enable [i18n-module](https://github.com/nuxt-community/i18n-module) integration.
+
 ### `hideDefaultLauncher`
 
 - Type: `Boolean`
