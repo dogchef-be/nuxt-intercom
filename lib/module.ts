@@ -15,6 +15,7 @@ export default function IntercomModule(this: any): void {
     horizontalPadding: 20,
     verticalPadding: 20,
     enableMobilePadding: false,
+    i18n: false,
   };
 
   const options = Object.assign({}, defaults, this.options.intercom);

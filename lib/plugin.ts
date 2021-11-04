@@ -18,6 +18,9 @@ const INTERCOM_SETTINGS: IntercomSettings = {
   horizontal_padding: Number.parseInt("<%= options.horizontalPadding %>"),
   vertical_padding: Number.parseInt("<%= options.verticalPadding %>"),
   enable_mobile_padding: _isTrue("<%= options.enableMobilePadding %>"),
+  language_override: _isTrue("<%= options.i18n %>")
+    ? window.$nuxt.$i18n.locale
+    : undefined,
 };
 
 const injectScript = (settings: IntercomSettings): HTMLScriptElement => {
@@ -58,10 +61,14 @@ const loadScript = (settings: IntercomSettings): Promise<typeof Intercom> => {
 
       let script = injectScript(settings);
 
-      script.addEventListener("load", () => {
-        window.Intercom("boot", settings);
-        resolve(window.Intercom);
-      }, false);
+      script.addEventListener(
+        "load",
+        () => {
+          window.Intercom("boot", settings);
+          resolve(window.Intercom);
+        },
+        false
+      );
     } catch (error) {
       reject(error);
       return;
