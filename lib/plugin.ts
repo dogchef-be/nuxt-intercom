@@ -76,7 +76,7 @@ const loadScript = (settings: IntercomSettings): Promise<typeof Intercom> => {
 
 export async function getIntercomInstance(
   command?: Intercom_.IntercomCommand,
-  args?: any
+  ...args: any
 ): Promise<typeof Intercom | void> {
   let instance = window.Intercom as any;
 
@@ -88,7 +88,7 @@ export async function getIntercomInstance(
     instance = await loadScript(INTERCOM_SETTINGS);
   }
 
-  return command ? instance(command, args) : instance;
+  return command ? instance(command, ...args) : instance;
 }
 
 const intercomPlugin: Plugin = (ctx, inject): void => {
