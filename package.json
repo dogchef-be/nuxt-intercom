@@ -15,7 +15,7 @@
     "build": "npm run clean && npm run transpile"
   },
   "dependencies": {
-    "@types/intercom-web": "^2.8.15"
+    "@types/intercom-web": "^2.8.18"
   },
   "devDependencies": {
     "@nuxt/types": "^2.15.8",
