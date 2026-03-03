@@ -18,7 +18,7 @@ const INTERCOM_SETTINGS: IntercomSettings = {
   horizontal_padding: Number.parseInt("<%= options.horizontalPadding %>"),
   vertical_padding: Number.parseInt("<%= options.verticalPadding %>"),
   enable_mobile_padding: _isTrue("<%= options.enableMobilePadding %>"),
-  language_override: undefined,
+  language_override: "<%= options.languageOverride %>",
 };
 
 const injectScript = (settings: IntercomSettings): HTMLScriptElement => {
