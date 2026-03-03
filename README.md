@@ -109,6 +109,11 @@ Move the default launcher icon vertically. Padding from bottom of screen. Minimu
 
 Apply the `verticalPadding` property to mobile devices.
 
+### `languageOverride`
+
+- Type: 'String'
+- Default: `""`
+
 ## Usage
 
 It can be used inside components like:
