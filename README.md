@@ -111,7 +111,7 @@ Apply the `verticalPadding` property to mobile devices.
 
 ### `languageOverride`
 
-- Type: 'String'
+- Type: `String`
 - Default: `""`
 
 ## Usage
